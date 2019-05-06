@@ -48,8 +48,9 @@ const SelectIngredientes = props => (
     <Select
     // defaultValue={ item === "" ? undefined : item.INGREDIENTES }
     placeholder="Ingrese un ingrediente..."
-    style={{ width: 350 }}
+    style={{ width: 350, margin: '2px' }}
     showSearch
+    value={props.value}
     onChange={(value) => props.onChange(getIngrediente(value))}
     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
     >

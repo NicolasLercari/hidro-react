@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 
 import FormulaTable from './FormulaTable.jsx';
-import IngredientesTable from './IngredientesTable.jsx';
 import { Button } from 'antd';
-import ModalAgregarIngrediente from './ModalAgregarIngrediente.jsx';
 import 'antd/dist/antd.css';
 import SelectIngredientes from './SelectIngredientes.jsx';
 import InputCantidad from './InputCantidad.jsx';
+import './Formula.scss';
+
+const buttonStyles = {margin: '2px', backgroundColor: '#3f51b5', borderColor: '#3f51b5'};
 
 class Formula extends Component {
-  
-  state = { ingredientesAgregados: [] };
+  constructor(props) {
+    super(props);
+    this.state = { ingredientesAgregados: [] };
+  }
 
   handleOkAgregarIngrediente = (ingrediente, cantidad) => {
     if(!ingrediente || !cantidad) return null;
@@ -19,7 +22,11 @@ class Formula extends Component {
       return null;
     }
     ingredientesAgregados.push(Object.assign(ingrediente, {cantidad}));
-    this.setState(ingredientesAgregados);
+    this.setState({
+      ingredientesAgregados,
+      ingrediente: undefined,
+      cantidad: undefined
+    });
   };
 
   handleChangeInputCantidad = event => {
@@ -40,10 +47,10 @@ class Formula extends Component {
         <div className="FormulaContainer" >
             {/* <IngredientesTable style={{width: '40%'}} /> */}
             {/* <ModalAgregarIngrediente handleOkAgregarIngrediente={this.handleOkAgregarIngrediente}/> */}
-            <div>
-              <SelectIngredientes onChange={this.handleChangeIngrediente} />
-              <InputCantidad onChange={this.handleChangeInputCantidad} />
-              <Button type="primary" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar ingrediente </Button>
+            <div className="InputIngredientes" >
+              <SelectIngredientes value={ingrediente && ingrediente.INGREDIENTES} onChange={this.handleChangeIngrediente} />
+              <InputCantidad value={cantidad} onChange={this.handleChangeInputCantidad} />
+              <Button style={buttonStyles} type="primary" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar ingrediente </Button>
             </div>
             <FormulaTable style={{width: '40%'}} ingredientesAgregados={ingredientesAgregados} />
         </div>
