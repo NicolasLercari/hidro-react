@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/hidro-react/static/css/main.eb76cdc7.chunk.css",
-    "main.js": "/hidro-react/static/js/main.083c34b2.chunk.js",
-    "main.js.map": "/hidro-react/static/js/main.083c34b2.chunk.js.map",
+    "main.css": "/hidro-react/static/css/main.dab7c9bc.chunk.css",
+    "main.js": "/hidro-react/static/js/main.195fb5f4.chunk.js",
+    "main.js.map": "/hidro-react/static/js/main.195fb5f4.chunk.js.map",
     "runtime~main.js": "/hidro-react/static/js/runtime~main.a540e45d.js",
     "runtime~main.js.map": "/hidro-react/static/js/runtime~main.a540e45d.js.map",
     "static/css/2.4358233e.chunk.css": "/hidro-react/static/css/2.4358233e.chunk.css",
-    "static/js/2.ab7a64c5.chunk.js": "/hidro-react/static/js/2.ab7a64c5.chunk.js",
-    "static/js/2.ab7a64c5.chunk.js.map": "/hidro-react/static/js/2.ab7a64c5.chunk.js.map",
+    "static/js/2.2535d2a3.chunk.js": "/hidro-react/static/js/2.2535d2a3.chunk.js",
+    "static/js/2.2535d2a3.chunk.js.map": "/hidro-react/static/js/2.2535d2a3.chunk.js.map",
     "index.html": "/hidro-react/index.html",
-    "precache-manifest.415b4ff6a0722fbec65e9063a53824e4.js": "/hidro-react/precache-manifest.415b4ff6a0722fbec65e9063a53824e4.js",
+    "precache-manifest.ad372541c765d77ec81825c608306706.js": "/hidro-react/precache-manifest.ad372541c765d77ec81825c608306706.js",
     "service-worker.js": "/hidro-react/service-worker.js",
     "static/css/2.4358233e.chunk.css.map": "/hidro-react/static/css/2.4358233e.chunk.css.map",
-    "static/css/main.eb76cdc7.chunk.css.map": "/hidro-react/static/css/main.eb76cdc7.chunk.css.map"
+    "static/css/main.dab7c9bc.chunk.css.map": "/hidro-react/static/css/main.dab7c9bc.chunk.css.map"
   }
 }
