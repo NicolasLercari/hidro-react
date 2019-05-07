@@ -12,7 +12,7 @@ const buttonStyles = {margin: '2px', backgroundColor: '#3f51b5', borderColor: '#
 class Formula extends Component {
   constructor(props) {
     super(props);
-    this.state = { ingredientesAgregados: [] };
+    this.state = { ingredientesAgregados: [], balanceTotal : {} };
   }
 
   handleOkAgregarIngrediente = (ingrediente, cantidad) => {
@@ -27,8 +27,57 @@ class Formula extends Component {
       ingrediente: undefined,
       cantidad: undefined
     });
+    this.actualizarBalanceTotal();
   };
 
+  obtenerTotalParaPropiedad = (ingredientes, propiedad) => {
+    return ingredientes
+      .filter(e => e[propiedad]).map(e => e[propiedad]).reduce((x,y) => x+y, 0);
+  };
+
+  obtenerPropiedadesConTotales = (total) => {
+    const { ingredientesAgregados } = this.state;
+    let ingredientesConTotales = [];
+    for(let i=0; i < ingredientesAgregados.length; i++){
+      const ingrediente = ingredientesAgregados[i];
+      console.log(ingrediente.INGREDIENTES);
+      const propiedades = Object.keys(ingrediente)
+                        .filter(n => n !== 'INGREDIENTES' &&  n !== 'key' && n !== 'cantidad');
+      const ingredienteConTotal = Object.assign({}, propiedades);
+      for(let j=0; j < propiedades.length; j++){
+        // divido por el total para obtener el porcentaje que muestra el excel
+        ingredienteConTotal[propiedades[j]] = (Number(ingrediente.cantidad)/total) * (ingredientesAgregados[i][propiedades[j]]);
+      };
+      ingredientesConTotales.push(ingredienteConTotal);
+    }
+    return ingredientesConTotales;
+  };
+
+  actualizarBalanceTotal = () => {
+    const { ingredientesAgregados } = this.state;
+    let total = 0;
+    if (ingredientesAgregados.length){
+      total =  ingredientesAgregados.map(e => Number(e.cantidad)).reduce((x,y) => x+y);
+    }
+    const ingredientesConTotales = this.obtenerPropiedadesConTotales(total);
+    //const ingredientesProporcion = ingredientesAgregados.map(e => Number(e.cantidad)/total);
+    //const ingredientesConTotales = this.obtener(ingredientesProporcion, total);
+
+    // calculos balance general
+    // TODO: refactor
+    const gb = this.obtenerTotalParaPropiedad(ingredientesConTotales, 'GB');
+    const sngl = this.obtenerTotalParaPropiedad(ingredientesConTotales, 'SNGL');
+    const azucares =  this.obtenerTotalParaPropiedad(ingredientesConTotales, 'AzÔøΩcares');
+    const mg = this.obtenerTotalParaPropiedad(ingredientesConTotales, 'MG');
+    const sng = this.obtenerTotalParaPropiedad(ingredientesConTotales, 'SNG');
+    const solidosTotales = gb + sngl + azucares + mg + sng;
+    // TODO: falta restarle al 100 los alcooles cuando los tenga
+    const hDosOMix = 100 - solidosTotales /*+ alcholes*/;
+    // TODO: falta restarle al 100 los alcooles cuando los tenga
+    const totalDelMix = hDosOMix + solidosTotales;
+
+    this.setState({balanceTotal: { gb,sngl,azucares, mg, sng, solidosTotales, hDosOMix, totalDelMix, total }});
+  };
   handleChangeInputCantidad = event => {
     this.setState({ cantidad: event.target.value })
   }
@@ -39,10 +88,9 @@ class Formula extends Component {
     this.setState({ ingrediente })
   }
 
-
   render = () => {
     const {ingredientesAgregados} = this.state;
-    const {ingrediente, cantidad} = this.state;
+    const {ingrediente, cantidad, balanceTotal} = this.state;
     return (
         <div className="FormulaContainer" >
             {/* <IngredientesTable style={{width: '40%'}} /> */}
@@ -52,7 +100,7 @@ class Formula extends Component {
               <InputCantidad value={cantidad} onChange={this.handleChangeInputCantidad} />
               <Button style={buttonStyles} type="primary" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar ingrediente </Button>
             </div>
-            <FormulaTable style={{width: '40%'}} ingredientesAgregados={ingredientesAgregados} />
+            <FormulaTable style={{width: '40%'}} balanceTotal={balanceTotal} ingredientesAgregados={ingredientesAgregados} />
         </div>
     );
   };

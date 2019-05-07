@@ -13,7 +13,7 @@ const Option = Select.Option;
 // };
 
 const getIngrediente = ingrediente => {
-    const [ result ] = ingredientesEstaticos.filter(e => e.key === Number(ingrediente));
+    const [result] = ingredientesEstaticos.filter(e => e.key === Number(ingrediente));
     return result;
 };
 
