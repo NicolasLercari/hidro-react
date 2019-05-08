@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import FormulaTable from './FormulaTable.jsx';
 import { Button } from 'antd';
@@ -6,10 +6,12 @@ import 'antd/dist/antd.css';
 import SelectIngredientes from './SelectIngredientes.jsx';
 import InputCantidad from './InputCantidad.jsx';
 import './Formula.scss';
+import BalanceTotal from './BalanceTotal.jsx';
 
 const buttonStyles = {margin: '2px', backgroundColor: '#3f51b5', borderColor: '#3f51b5'};
+// ,,, , , solidosTotales, , totalDelMix
 
-class Formula extends Component {
+class Formula extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { ingredientesAgregados: [], balanceTotal : {} };
@@ -40,7 +42,6 @@ class Formula extends Component {
     let ingredientesConTotales = [];
     for(let i=0; i < ingredientesAgregados.length; i++){
       const ingrediente = ingredientesAgregados[i];
-      console.log(ingrediente.INGREDIENTES);
       const propiedades = Object.keys(ingrediente)
                         .filter(n => n !== 'INGREDIENTES' &&  n !== 'key' && n !== 'cantidad');
       const ingredienteConTotal = Object.assign({}, propiedades);
@@ -76,8 +77,17 @@ class Formula extends Component {
     // TODO: falta restarle al 100 los alcooles cuando los tenga
     const totalDelMix = hDosOMix + solidosTotales;
 
-    this.setState({balanceTotal: { gb,sngl,azucares, mg, sng, solidosTotales, hDosOMix, totalDelMix, total }});
+    // const balanceTotal = [{ propiedad: 'gb', proporcion: gb }, { propiedades: 'sngl', proporcion: sngl}
+    //       , {propiedad: 'azucares', proporcion: azucares }, {propiedad: 'mg', proporcion: mg}
+    //       , {propiedad: 'sng', proporcion: mg }, {propiedad: 'solidosTotales', proporcion: solidosTotales}
+    //       , {propiedad: 'hDosOMix', proporcion: hDosOMix }, {propiedad: 'totalDelMix', propocion: totalDelMix} 
+    //       , { propiedad: 'total', proporcion: total }];
+    
+    // this.setState({ balanceTotal });
+    const balanceTotal = { gb, sngl, azucares, mg, sng, solidosTotales, hDosOMix, totalDelMix, total};
+    this.setState({ balanceTotal })
   };
+
   handleChangeInputCantidad = event => {
     this.setState({ cantidad: event.target.value })
   }
@@ -89,19 +99,22 @@ class Formula extends Component {
   }
 
   render = () => {
-    const {ingredientesAgregados} = this.state;
-    const {ingrediente, cantidad, balanceTotal} = this.state;
+    const { ingredientesAgregados } = this.state;
+    const { ingrediente, cantidad, balanceTotal } = this.state;
     return (
-        <div className="FormulaContainer" >
-            {/* <IngredientesTable style={{width: '40%'}} /> */}
-            {/* <ModalAgregarIngrediente handleOkAgregarIngrediente={this.handleOkAgregarIngrediente}/> */}
-            <div className="InputIngredientes" >
-              <SelectIngredientes value={ingrediente && ingrediente.INGREDIENTES} onChange={this.handleChangeIngrediente} />
-              <InputCantidad value={cantidad} onChange={this.handleChangeInputCantidad} />
-              <Button style={buttonStyles} type="primary" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar ingrediente </Button>
-            </div>
-            <FormulaTable style={{width: '40%'}} balanceTotal={balanceTotal} ingredientesAgregados={ingredientesAgregados} />
+      <div className="FormulaContainer" >
+        <div className="InputIngredientes" >
+          <SelectIngredientes value={ingrediente && ingrediente.INGREDIENTES} onChange={this.handleChangeIngrediente} />
+          <InputCantidad value={cantidad} onChange={this.handleChangeInputCantidad} />
+          <Button style={buttonStyles} type="primary" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar ingrediente </Button>
         </div>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <div style={{width: '48%'}}>
+            <FormulaTable style={{width: '42%'}} ingredientesAgregados={ingredientesAgregados} />
+          </div>
+          <BalanceTotal balanceTotal={balanceTotal} />
+        </div>
+      </div>
     );
   };
 }

@@ -1,6 +1,15 @@
 .FormulaContainer {
     margin: 10px 3px;
 
+    .BalanceCard {
+        p {
+            color: #A3ABD7;
+        }
+        p:first-child {
+            color: #7585d8;
+          }    
+        }
+
     .InputIngredientes {
         margin-bottom: 5px;
         display: flex;
