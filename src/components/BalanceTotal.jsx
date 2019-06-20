@@ -1,19 +1,29 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+
+import { Progress } from 'reactstrap';
 
 const BalanaceTotal = ({ balanceTotal }) => {
   const { gb, sngl, azucares, mg, sng, solidosTotales, hDosOMix, totalDelMix, total } = balanceTotal;
   return (
     <div className="BalanceCard" style={{width: '50%'}}>
       <p> BALANCE GENERAL </p>
-      <p> GB: {gb} %</p>
-      <p> S.N.G.L: {sngl} %</p>
-      <p> Azucares: {azucares} %</p>
-      <p> Materia Grasa (no lacteos): {mg} %</p>
-      <p> Solidos No Grasos (no Lacteos): {sng} %</p>
-      <p> Solidos Totales: {solidosTotales} %</p>
-      <p> H2O del mix: {hDosOMix} %</p>
-      <p> Total (% p/p del mix): {totalDelMix} %</p>
-      <p> Total: {total} Kgs.</p>
+      <div className="text-center" color="success" >GB: {gb} %</div>
+      <Progress value={gb} />
+      <div className="text-center">S.N.G.L: {sngl} %</div>
+      <Progress value={sngl} />
+      <div className="text-center">Azucares: {azucares} %</div>
+      <Progress value={azucares} />
+      <div className="text-center">Materia Grasa (no lacteos): {mg} %</div>
+      <Progress value={mg} />
+      <div className="text-center">Solidos Totales: {solidosTotales} %</div>
+      <Progress value={solidosTotales} />
+      <div className="text-center">H2O del mix: {hDosOMix} %</div>
+      <Progress value={hDosOMix} />
+      <div className="text-center">Total (% p/p del mix): {totalDelMix} %</div>
+      <Progress value={totalDelMix} />
+      <div className="text-center"> Total: {total} Kgs.</div>
+      <Progress value={total} />
     </div>
   );
 };

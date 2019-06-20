@@ -29,6 +29,7 @@ class Formula extends PureComponent {
       ingrediente: undefined,
       cantidad: undefined
     });
+    console.log(ingredientesAgregados);
     this.actualizarBalanceTotal();
   };
 
@@ -93,8 +94,6 @@ class Formula extends PureComponent {
   }
 
   handleChangeIngrediente = ingrediente => {
-    // const { ingredientes } = this.state;
-    // ingredientes.push(ingrediente);
     this.setState({ ingrediente })
   }
 
@@ -108,7 +107,7 @@ class Formula extends PureComponent {
           <InputCantidad value={cantidad} onChange={this.handleChangeInputCantidad} />
           <Button style={buttonStyles} type="primary" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar ingrediente </Button>
         </div>
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <div >
           <div style={{width: '48%'}}>
             <FormulaTable style={{width: '42%'}} ingredientesAgregados={ingredientesAgregados} />
           </div>
