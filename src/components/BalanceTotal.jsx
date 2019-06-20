@@ -1,13 +1,13 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Progress } from 'reactstrap';
 
 const BalanaceTotal = ({ balanceTotal }) => {
   const { gb, sngl, azucares, mg, sng, solidosTotales, hDosOMix, totalDelMix, total } = balanceTotal;
   return (
-    <div className="BalanceCard" style={{width: '50%'}}>
-      <p> BALANCE GENERAL </p>
+    <div className="BalanceCard"> 
       <div className="text-center" color="success" >GB: {gb} %</div>
       <Progress value={gb} />
       <div className="text-center">S.N.G.L: {sngl} %</div>

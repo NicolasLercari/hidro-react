@@ -1,7 +1,20 @@
 .FormulaContainer {
-    margin: 10px 3px;
+    display: flex;
+    justify-content: center;
+    padding: 3%;
 
+    .FormulaTable {
+        width: 60%;
+        margin: 0 2%;
+    }
+    .Balance {
+        width: 30%;
+        .MuiTypography-body1 {
+            width: 100%
+        }
+    }
     .BalanceCard {
+        margin: 1%;
         p {
             color: #A3ABD7;
         }
@@ -9,9 +22,17 @@
             color: #7585d8;
           }    
         }
-
-    .InputIngredientes {
-        margin-bottom: 5px;
+    .IngredientesContainer {
         display: flex;
+        flex-flow: column;
+
+        .InputIngredientes {
+            margin-bottom: 5px;
+            display: flex;
+        }
     }
+}
+
+.AddIngrediente {
+    display: flex;
 }
