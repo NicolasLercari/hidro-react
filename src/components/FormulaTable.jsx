@@ -13,7 +13,14 @@ const columns = [{
   key: 'cantidad'
 }];
 
-const FormulaTable = ({ ingredientesAgregados }) => 
-  <Table dataSource={ingredientesAgregados} columns={columns} />
+const FormulaTable = ({ ingredientesAgregados, footer }) => {
+  return (
+    <Table 
+      dataSource={ingredientesAgregados}
+      columns={columns}
+      {...{footer}}
+      pagination={false}
+    />);
+}
 
 export default FormulaTable;

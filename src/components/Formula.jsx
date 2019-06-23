@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-import MaterialTable from "material-table";
 import './Formula.scss';
-import { makeStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 import Balance from './Balance'
 import SelectIngredientes from './SelectIngredientes'
 import InputCantidad from './InputCantidad.jsx';
-import Button from '@material-ui/core/Button';
-
-const buttonStyles = {margin: '2px', backgroundColor: '#3f51b5', borderColor: '#3f51b5'};
-
+import FormulaTable from './FormulaTable.jsx';
+import BalanceTotal from './BalanceTotal.jsx';
 
 class Formula extends Component {
   constructor(props) {
@@ -50,23 +47,32 @@ class Formula extends Component {
     // TODO: falta restarle al 100 los alcooles cuando los tenga
     const totalDelMix = hDosOMix + solidosTotales;
 
-    // const balanceTotal = [{ propiedad: 'gb', proporcion: gb }, { propiedades: 'sngl', proporcion: sngl}
-    //       , {propiedad: 'azucares', proporcion: azucares }, {propiedad: 'mg', proporcion: mg}
-    //       , {propiedad: 'sng', proporcion: mg }, {propiedad: 'solidosTotales', proporcion: solidosTotales}
-    //       , {propiedad: 'hDosOMix', proporcion: hDosOMix }, {propiedad: 'totalDelMix', proporcion: totalDelMix} 
-    //       , { propiedad: 'total', proporcion: total }];
-    
-    // this.setState({ balanceTotal });
     const balanceTotal = { gb, sngl, azucares, mg, sng, solidosTotales, hDosOMix, totalDelMix, total};
     this.setState({ balanceTotal })
   };
     
+  handleEditIngrediente = (ingrediente, cantidad) => {
+    const { ingredientesAgregados } = this.state;
+    ingredientesAgregados.forEach(ingredienteAEditar => {
+      if(ingredienteAEditar.INGREDIENTES === ingrediente.INGREDIENTES){
+        ingredienteAEditar.cantidad = cantidad;
+        return;
+      }
+    })
+    this.setState({
+      ingredientesAgregados, 
+      ingrediente: undefined,
+      cantidad: undefined
+    });
+    this.actualizarBalanceTotal();
+  };
 
   handleOkAgregarIngrediente = (ingrediente, cantidad) => {
     if(!ingrediente || !cantidad) return null;
     const { ingredientesAgregados } = this.state;
     if(!ingredientesAgregados.every(e => e.INGREDIENTES !== ingrediente.INGREDIENTES)) {
-      return null;
+      this.handleEditIngrediente(ingrediente, cantidad);
+      return;
     }
     ingredientesAgregados.push(Object.assign(ingrediente, {cantidad}));
     this.setState({
@@ -106,7 +112,6 @@ class Formula extends Component {
     }
     return ingredientesConTotales;
   };
-    
 
   render() {
     const { ingredientesAgregados } = this.state;
@@ -114,36 +119,22 @@ class Formula extends Component {
     return (
       <div className="FormulaContainer">
         <div className="FormulaTable">
-          <MaterialTable
-            title="Editable Preview"
-            columns={this.state.columns}
-            data={ingredientesAgregados}
-            editable={{
-              onRowAdd: newData =>
-              new Promise((resolve, reject) => {
-                  setTimeout(() => {
-                      {
-                        const { ingredientesAgregados } = this.state;
-                        ingredientesAgregados.push(newData);
-                        this.setState({ ingredientesAgregados }, () => resolve());
-                      }
-                      resolve();
-                  }, 1000);
-              }),
-            }}
-            components={{
-              EditRow: () => (
-                  <div className="AddIngrediente">
-                    <SelectIngredientes value={ingrediente && ingrediente.INGREDIENTES} onChange={this.handleChangeIngrediente} />
-                    <InputCantidad value={cantidad} onChange={this.handleChangeInputCantidad} />    
-                    <Button color="primary" variant="contained" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar </Button>
-                  </div>
-                ) 
-            }}
-          />
+          <FormulaTable style={{width: '42%'}}
+            ingredientesAgregados={ingredientesAgregados}
+            footer={() => (
+              <div className="InputIngredientes" >
+                <SelectIngredientes value={ingrediente && ingrediente.INGREDIENTES} onChange={this.handleChangeIngrediente} />
+                <InputCantidad value={cantidad} onChange={this.handleChangeInputCantidad} />
+                {/* <Button variant="contained" color="primary" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar </Button> */}
+                <Fab  size="small" color="primary" aria-label="Add">
+                  <AddIcon className="ButtonAgregarIngrediente" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)} />
+                </Fab>
+              </div>
+              )}
+            />
         </div>
         <div className="Balance">
-          <Balance balanceTotal={balanceTotal}/>
+          <Balance {...{balanceTotal}}/>
         </div>
       </div>
     )
