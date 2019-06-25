@@ -119,18 +119,7 @@ class Formula extends Component {
     return (
       <div className="FormulaContainer">
         <div className="FormulaTable">
-          <FormulaTable style={{width: '42%'}}
-            ingredientesAgregados={ingredientesAgregados}
-            footer={() => (
-              <div className="InputIngredientes" >
-                <SelectIngredientes value={ingrediente && ingrediente.INGREDIENTES} onChange={this.handleChangeIngrediente} />
-                <InputCantidad value={cantidad} onChange={this.handleChangeInputCantidad} />
-                {/* <Button variant="contained" color="primary" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar </Button> */}
-                <Fab  size="small" color="primary" aria-label="Add">
-                  <AddIcon className="ButtonAgregarIngrediente" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)} />
-                </Fab>
-              </div>
-              )}
+          <FormulaTable onChange={() => console.log("HOLAAAAAA")} style={{width: '42%'}}
             />
         </div>
         <div className="Balance">

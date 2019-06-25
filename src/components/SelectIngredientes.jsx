@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Select } from 'antd';
 import React from 'react';
 import 'antd/dist/antd.css';
@@ -5,12 +6,6 @@ import 'antd/dist/antd.css';
 import ingredientesEstaticos from './ingredientesEstaticos';
 
 const Option = Select.Option;
-// const onChange = value => {
-//     const { onChange } = this.props;
-//     console.log(value);
-//     const [ingrediente] = (ingredientesEstaticos.filter(e => e.key === Number(value)));
-//     onChange
-// };
 
 const getIngrediente = ingrediente => {
     const [result] = ingredientesEstaticos.filter(e => e.key === Number(ingrediente));
@@ -30,28 +25,12 @@ function onSearch(val) {
 }
 
 const SelectIngredientes = props => (
-//   <Select
-//     showSearch
-//     style={{ width: 200 }}
-//     placeholder="Select a person"
-//     optionFilterProp="children"
-//     onChange={onChange}
-//     onFocus={onFocus}
-//     onBlur={onBlur}
-//     onSearch={onSearch}
-//     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-//   >
-//     <Option value="jack">Jack</Option>
-//     <Option value="lucy">Lucy</Option>
-//     <Option value="tom">Tom</Option>
-//   </Select>
     <Select
-    // defaultValue={ item === "" ? undefined : item.INGREDIENTES }
     placeholder="Ingrese un ingrediente..."
     style={{ width: 350, margin: '2px' }}
     showSearch
     value={props.value}
-    onChange={(value) => props.onChange(getIngrediente(value))}
+    onChange={(value) => props.onChange(getIngrediente(value).INGREDIENTES)}
     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
     >
     {ingredientesEstaticos.map(item => (
