@@ -12,13 +12,6 @@ class Formula extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      columns: [
-        { 
-          title: 'Ingredientes',
-          field: 'INGREDIENTES'
-        },
-        { title: 'kilos', field: 'cantidad' },
-      ],
       ingredientesAgregados: [],
       balanceTotal : {}
     }
@@ -93,7 +86,11 @@ class Formula extends Component {
   }
   
   handleChangeIngrediente = ingrediente => {
-    this.setState({ ingrediente })
+    // this.setState({ ingrediente })
+    if(!this.state.ingredientesAgregados.filter(e => e.INGREDIENTES === ingrediente.INGREDIENTES).length){
+      this.state.ingredientesAgregados.push(ingrediente);
+      this.setState(this.state.ingredientesAgregados);
+    }
   }
 
   obtenerPropiedadesConTotales = (total) => {
@@ -113,6 +110,16 @@ class Formula extends Component {
     return ingredientesConTotales;
   };
 
+  handleAgregar = () => {
+    const { ingredientesAgregados } = this.state;
+    ingredientesAgregados.push({ingrediente: undefined, cantidad: 0});
+    this.setState({
+      ingredientesAgregados,
+      ingrediente: undefined,
+      cantidad: undefined
+    });
+  };
+
   render() {
     const { ingredientesAgregados } = this.state;
     const { ingrediente, cantidad, balanceTotal } = this.state;
@@ -121,13 +128,16 @@ class Formula extends Component {
         <div className="FormulaTable">
           <FormulaTable style={{width: '42%'}}
             ingredientesAgregados={ingredientesAgregados}
+            onChange={this.handleChangeIngrediente}
             footer={() => (
               <div className="InputIngredientes" >
-                <SelectIngredientes value={ingrediente && ingrediente.INGREDIENTES} onChange={this.handleChangeIngrediente} />
+                <SelectIngredientes
+                  value={ingrediente && ingrediente.INGREDIENTES}
+                  onChange={this.handleChangeIngrediente} />
                 <InputCantidad value={cantidad} onChange={this.handleChangeInputCantidad} />
                 {/* <Button variant="contained" color="primary" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar </Button> */}
                 <Fab  size="small" color="primary" aria-label="Add">
-                  <AddIcon className="ButtonAgregarIngrediente" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)} />
+                  <AddIcon className="ButtonAgregarIngrediente" onClick={() => this.handleAgregar()} />
                 </Fab>
               </div>
               )}

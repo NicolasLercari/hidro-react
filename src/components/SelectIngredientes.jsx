@@ -51,7 +51,10 @@ const SelectIngredientes = props => (
     style={{ width: 350, margin: '2px' }}
     showSearch
     value={props.value}
-    onChange={(value) => props.onChange(getIngrediente(value))}
+    onChange={(value) => {
+      const ingrediente = getIngrediente(value);
+      return props.onChange(ingrediente)
+    }}
     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
     >
     {ingredientesEstaticos.map(item => (
