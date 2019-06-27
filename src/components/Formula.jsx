@@ -1,18 +1,15 @@
 import React, { Component } from "react";
-import MaterialTable from "material-table";
 import './Formula.scss';
-import { makeStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 import Balance from './Balance'
 import SelectIngredientes from './SelectIngredientes'
 import InputCantidad from './InputCantidad.jsx';
 import Button from '@material-ui/core/Button';
 import FormulaTable from './FormulaTable.jsx';
-
 import { getIngredienteObjectByName } from './ingredientesHelper.js';
 
 const buttonStyles = {margin: '2px', backgroundColor: '#3f51b5', borderColor: '#3f51b5'};
-
 
 class Formula extends Component {
   constructor(props) {
@@ -45,23 +42,32 @@ class Formula extends Component {
     // TODO: falta restarle al 100 los alcooles cuando los tenga
     const totalDelMix = hDosOMix + solidosTotales;
 
-    // const balanceTotal = [{ propiedad: 'gb', proporcion: gb }, { propiedades: 'sngl', proporcion: sngl}
-    //       , {propiedad: 'azucares', proporcion: azucares }, {propiedad: 'mg', proporcion: mg}
-    //       , {propiedad: 'sng', proporcion: mg }, {propiedad: 'solidosTotales', proporcion: solidosTotales}
-    //       , {propiedad: 'hDosOMix', proporcion: hDosOMix }, {propiedad: 'totalDelMix', proporcion: totalDelMix} 
-    //       , { propiedad: 'total', proporcion: total }];
-    
-    // this.setState({ balanceTotal });
     const balanceTotal = { gb, sngl, azucares, mg, sng, solidosTotales, hDosOMix, totalDelMix, total};
     this.setState({ balanceTotal })
   };
     
+  handleEditIngrediente = (ingrediente, cantidad) => {
+    const { ingredientesAgregados } = this.state;
+    ingredientesAgregados.forEach(ingredienteAEditar => {
+      if(ingredienteAEditar.INGREDIENTES === ingrediente.INGREDIENTES){
+        ingredienteAEditar.cantidad = cantidad;
+        return;
+      }
+    })
+    this.setState({
+      ingredientesAgregados, 
+      ingrediente: undefined,
+      cantidad: undefined
+    });
+    this.actualizarBalanceTotal();
+  };
 
   handleOkAgregarIngrediente = (ingrediente, cantidad) => {
     if(!ingrediente || !cantidad) return null;
     const { ingredientesAgregados } = this.state;
     if(!ingredientesAgregados.every(e => e.INGREDIENTES !== ingrediente.INGREDIENTES)) {
-      return null;
+      this.handleEditIngrediente(ingrediente, cantidad);
+      return;
     }
     ingredientesAgregados.push(Object.assign(ingrediente, {cantidad}));
     this.setState({
@@ -123,7 +129,6 @@ class Formula extends Component {
     }
     return ingredientesConTotales;
   };
-    
 
   render() {
     const { ingredientesAgregados } = this.state;
@@ -137,7 +142,7 @@ class Formula extends Component {
             {...{ onAdd, onUpdate, onDelete }} />
         </div>
         <div className="Balance">
-          <Balance balanceTotal={balanceTotal}/>
+          <Balance {...{balanceTotal}}/>
         </div>
       </div>
     )

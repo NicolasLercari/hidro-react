@@ -32,9 +32,7 @@ export default function SimpleExpansionPanel({ balanceTotal }) {
           <Typography className={classes.heading}>Balance General</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Typography>
             <BalanceTotal {...{balanceTotal}}/>
-          </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>
