@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/hidro-react/static/css/main.5ff2a7fd.chunk.css",
-    "main.js": "/hidro-react/static/js/main.d2995901.chunk.js",
-    "main.js.map": "/hidro-react/static/js/main.d2995901.chunk.js.map",
+    "main.js": "/hidro-react/static/js/main.75b79a05.chunk.js",
+    "main.js.map": "/hidro-react/static/js/main.75b79a05.chunk.js.map",
     "runtime~main.js": "/hidro-react/static/js/runtime~main.a540e45d.js",
     "runtime~main.js.map": "/hidro-react/static/js/runtime~main.a540e45d.js.map",
     "static/css/2.45868043.chunk.css": "/hidro-react/static/css/2.45868043.chunk.css",
     "static/js/2.c672bdef.chunk.js": "/hidro-react/static/js/2.c672bdef.chunk.js",
     "static/js/2.c672bdef.chunk.js.map": "/hidro-react/static/js/2.c672bdef.chunk.js.map",
     "index.html": "/hidro-react/index.html",
-    "precache-manifest.b73a5d463c6f912e4f40a688055a6a25.js": "/hidro-react/precache-manifest.b73a5d463c6f912e4f40a688055a6a25.js",
+    "precache-manifest.83bd0446a61f64b02ffbbce81ca40fb3.js": "/hidro-react/precache-manifest.83bd0446a61f64b02ffbbce81ca40fb3.js",
     "service-worker.js": "/hidro-react/service-worker.js",
     "static/css/2.45868043.chunk.css.map": "/hidro-react/static/css/2.45868043.chunk.css.map",
     "static/css/main.5ff2a7fd.chunk.css.map": "/hidro-react/static/css/main.5ff2a7fd.chunk.css.map"
