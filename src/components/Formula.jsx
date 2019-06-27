@@ -5,32 +5,27 @@ import AddIcon from '@material-ui/icons/Add';
 import Balance from './Balance'
 import SelectIngredientes from './SelectIngredientes'
 import InputCantidad from './InputCantidad.jsx';
+import Button from '@material-ui/core/Button';
 import FormulaTable from './FormulaTable.jsx';
-import BalanceTotal from './BalanceTotal.jsx';
+import { getIngredienteObjectByName } from './ingredientesHelper.js';
+
+const buttonStyles = {margin: '2px', backgroundColor: '#3f51b5', borderColor: '#3f51b5'};
 
 class Formula extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      columns: [
-        { 
-          title: 'Ingredientes',
-          field: 'INGREDIENTES'
-        },
-        { title: 'kilos', field: 'cantidad' },
-      ],
       ingredientesAgregados: [],
       balanceTotal : {}
     }
   }
 
-  actualizarBalanceTotal = () => {
-    const { ingredientesAgregados } = this.state;
+  actualizarBalanceTotal = ingredientesAgregados => {
     let total = 0;
     if (ingredientesAgregados.length){
       total =  ingredientesAgregados.map(e => Number(e.cantidad)).reduce((x,y) => x+y);
     }
-    const ingredientesConTotales = this.obtenerPropiedadesConTotales(total);
+    const ingredientesConTotales = this.obtenerPropiedadesConTotales(ingredientesAgregados, total);
     //const ingredientesProporcion = ingredientesAgregados.map(e => Number(e.cantidad)/total);
     //const ingredientesConTotales = this.obtener(ingredientesProporcion, total);
 
@@ -83,30 +78,52 @@ class Formula extends Component {
     this.actualizarBalanceTotal();
   };
 
+  onUpdate = (newIngrediente, oldIngrediente, callback) => {
+    const { ingredientesAgregados } = this.state;
+    const index = ingredientesAgregados.indexOf(oldIngrediente);
+    ingredientesAgregados[index] = newIngrediente;
+    this.setState({ ingredientesAgregados }, callback);
+    this.actualizarBalanceTotal(ingredientesAgregados);
+  }
+
+  onAdd = (newIngrediente, callback) => {
+    const { ingredientesAgregados } = this.state;
+    ingredientesAgregados.push(newIngrediente);
+    this.setState({ ingredientesAgregados }, callback);
+    this.actualizarBalanceTotal(ingredientesAgregados);
+  }
+
+  onDelete = (oldIngrediente, callback) => {
+    let { ingredientesAgregados } = this.state;
+    const index = ingredientesAgregados.indexOf(oldIngrediente);
+    ingredientesAgregados.splice(index, 1);
+    this.setState({ ingredientesAgregados }, callback);
+    this.actualizarBalanceTotal(ingredientesAgregados);
+  }
+
   obtenerTotalParaPropiedad = (ingredientes, propiedad) => {
     return ingredientes
       .filter(e => e[propiedad]).map(e => e[propiedad]).reduce((x,y) => x+y, 0);
   };
   
   handleChangeInputCantidad = event => {
-      this.setState({ cantidad: event.target.value })
+    this.setState({ cantidad: event.target.value })
   }
   
   handleChangeIngrediente = ingrediente => {
     this.setState({ ingrediente })
   }
 
-  obtenerPropiedadesConTotales = (total) => {
-    const { ingredientesAgregados } = this.state;
+  obtenerPropiedadesConTotales = (ingredientes, total) => {
     let ingredientesConTotales = [];
-    for(let i=0; i < ingredientesAgregados.length; i++){
-      const ingrediente = ingredientesAgregados[i];
+    for(let i=0; i < ingredientes.length; i++){
+      const ingrediente = getIngredienteObjectByName(ingredientes[i].INGREDIENTES);
       const propiedades = Object.keys(ingrediente)
                         .filter(n => n !== 'INGREDIENTES' &&  n !== 'key' && n !== 'cantidad');
       const ingredienteConTotal = Object.assign({}, propiedades);
       for(let j=0; j < propiedades.length; j++){
         // divido por el total para obtener el porcentaje que muestra el excel
-        ingredienteConTotal[propiedades[j]] = (Number(ingrediente.cantidad)/total) * (ingredientesAgregados[i][propiedades[j]]);
+        ingredienteConTotal[propiedades[j]] = (Number(ingredientes[i].cantidad)/total) * (ingrediente[propiedades[j]]);
       };
       ingredientesConTotales.push(ingredienteConTotal);
     }
@@ -116,22 +133,13 @@ class Formula extends Component {
   render() {
     const { ingredientesAgregados } = this.state;
     const { ingrediente, cantidad, balanceTotal } = this.state;
+    const { onAdd, onUpdate, onDelete } = this;
     return (
       <div className="FormulaContainer">
         <div className="FormulaTable">
-          <FormulaTable style={{width: '42%'}}
-            ingredientesAgregados={ingredientesAgregados}
-            footer={() => (
-              <div className="InputIngredientes" >
-                <SelectIngredientes value={ingrediente && ingrediente.INGREDIENTES} onChange={this.handleChangeIngrediente} />
-                <InputCantidad value={cantidad} onChange={this.handleChangeInputCantidad} />
-                {/* <Button variant="contained" color="primary" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar </Button> */}
-                <Fab  size="small" color="primary" aria-label="Add">
-                  <AddIcon className="ButtonAgregarIngrediente" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)} />
-                </Fab>
-              </div>
-              )}
-            />
+          <FormulaTable 
+            data={ingredientesAgregados}
+            {...{ onAdd, onUpdate, onDelete }} />
         </div>
         <div className="Balance">
           <Balance {...{balanceTotal}}/>
