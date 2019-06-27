@@ -7,6 +7,7 @@ import Balance from './Balance'
 import SelectIngredientes from './SelectIngredientes'
 import InputCantidad from './InputCantidad.jsx';
 import Button from '@material-ui/core/Button';
+import FormulaTable from './FormulaTable.jsx';
 
 const buttonStyles = {margin: '2px', backgroundColor: '#3f51b5', borderColor: '#3f51b5'};
 
@@ -15,13 +16,6 @@ class Formula extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      columns: [
-        { 
-          title: 'Ingredientes',
-          field: 'INGREDIENTES'
-        },
-        { title: 'kilos', field: 'cantidad' },
-      ],
       ingredientesAgregados: [],
       balanceTotal : {}
     }
@@ -77,13 +71,33 @@ class Formula extends Component {
     this.actualizarBalanceTotal();
   };
 
+  onUpdate = (newIngrediente, oldIngrediente, callback) => {
+    const { ingredientesAgregados } = this.state;
+    const index = ingredientesAgregados.indexOf(oldIngrediente);
+    ingredientesAgregados[index] = newIngrediente;
+    this.setState({ ingredientesAgregados }, callback);
+  }
+
+  onAdd = (newIngrediente, callback) => {
+    const { ingredientesAgregados } = this.state;
+    ingredientesAgregados.push(newIngrediente);
+    this.setState({ ingredientesAgregados }, callback);
+  }
+
+  onDelete = (oldIngrediente, callback) => {
+    let { ingredientesAgregados } = this.state;
+    const index = ingredientesAgregados.indexOf(oldIngrediente);
+    ingredientesAgregados.splice(index, 1);
+    this.setState({ ingredientesAgregados }, callback);
+  }
+
   obtenerTotalParaPropiedad = (ingredientes, propiedad) => {
     return ingredientes
       .filter(e => e[propiedad]).map(e => e[propiedad]).reduce((x,y) => x+y, 0);
   };
   
   handleChangeInputCantidad = event => {
-      this.setState({ cantidad: event.target.value })
+    this.setState({ cantidad: event.target.value })
   }
   
   handleChangeIngrediente = ingrediente => {
@@ -111,36 +125,13 @@ class Formula extends Component {
   render() {
     const { ingredientesAgregados } = this.state;
     const { ingrediente, cantidad, balanceTotal } = this.state;
+    const { onAdd, onUpdate, onDelete } = this;
     return (
       <div className="FormulaContainer">
         <div className="FormulaTable">
-          <MaterialTable
-            title="Editable Preview"
-            columns={this.state.columns}
+          <FormulaTable 
             data={ingredientesAgregados}
-            editable={{
-              onRowAdd: newData =>
-              new Promise((resolve, reject) => {
-                  setTimeout(() => {
-                      {
-                        const { ingredientesAgregados } = this.state;
-                        ingredientesAgregados.push(newData);
-                        this.setState({ ingredientesAgregados }, () => resolve());
-                      }
-                      resolve();
-                  }, 1000);
-              }),
-            }}
-            components={{
-              EditRow: () => (
-                  <div className="AddIngrediente">
-                    <SelectIngredientes value={ingrediente && ingrediente.INGREDIENTES} onChange={this.handleChangeIngrediente} />
-                    <InputCantidad value={cantidad} onChange={this.handleChangeInputCantidad} />    
-                    <Button color="primary" variant="contained" onClick={() => this.handleOkAgregarIngrediente(ingrediente, cantidad)}> agregar </Button>
-                  </div>
-                ) 
-            }}
-          />
+            {...{ onAdd, onUpdate, onDelete }} />
         </div>
         <div className="Balance">
           <Balance balanceTotal={balanceTotal}/>
