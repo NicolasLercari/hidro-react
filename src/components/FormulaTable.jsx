@@ -101,7 +101,7 @@ class CustomEditComponent extends React.Component {
     const { data, onUpdate, onAdd, onDelete } = this.props;
     return (
       <MaterialTable
-        title="Custom Edit Component Preview"
+        title="Receta"
         options={{actionsColumnIndex: this.state.columns.length}}
         columns={this.state.columns}
         data={data}
