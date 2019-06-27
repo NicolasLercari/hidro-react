@@ -87,7 +87,8 @@ class CustomEditComponent extends React.Component {
         }, 
         {
           title: 'kilos',
-          field: 'cantidad'
+          field: 'cantidad',
+          type: 'numeric'
        }
       ],
       data: []
@@ -110,11 +111,7 @@ class CustomEditComponent extends React.Component {
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 {
-                  // const data = this.state.data;
-                  // data.push(newData);
-                  // this.setState({ data }, () => resolve());
                   onAdd(newData, () => resolve());
-
                 }
                 resolve()
               }, 1000)

@@ -88,6 +88,11 @@ class Formula extends Component {
 
   onAdd = (newIngrediente, callback) => {
     const { ingredientesAgregados } = this.state;
+    if(!ingredientesAgregados.every(e => e.INGREDIENTES !== newIngrediente.INGREDIENTES)) {
+      callback();
+      window.alert(`El ingrediente ${newIngrediente.INGREDIENTES} ya esta agregado. Si desea cambiarlo, edítelo.`);
+      return;
+    }
     ingredientesAgregados.push(newIngrediente);
     this.setState({ ingredientesAgregados }, callback);
     this.actualizarBalanceTotal(ingredientesAgregados);
