@@ -93,6 +93,11 @@ class Formula extends Component {
       window.alert(`El ingrediente ${newIngrediente.INGREDIENTES} ya esta agregado. Si desea cambiarlo, edítelo.`);
       return;
     }
+    if(!newIngrediente.cantidad){
+      callback();
+      window.alert(`Debe ingresar una cantidad para guardar el ingrediente`);
+      return;
+    }
     ingredientesAgregados.push(newIngrediente);
     this.setState({ ingredientesAgregados }, callback);
     this.actualizarBalanceTotal(ingredientesAgregados);

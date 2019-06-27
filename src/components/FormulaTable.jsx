@@ -88,7 +88,8 @@ class CustomEditComponent extends React.Component {
         {
           title: 'kilos',
           field: 'cantidad',
-          type: 'numeric'
+          type: 'numeric',
+          required: true
        }
       ],
       data: []
