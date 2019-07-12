@@ -27,6 +27,9 @@ class FormulateTable extends React.Component {
     this.state = {
       columns: [
         {
+          cellStyle: {
+            zIndex: 0
+          },
           title: 'Ingredientes',
           field: 'INGREDIENTES',
           editComponent: ({ value, onChange }) => (
@@ -37,6 +40,9 @@ class FormulateTable extends React.Component {
           title: 'kilos',
           field: 'cantidad',
           type: 'numeric',
+          cellStyle: {
+            zIndex: 0
+          },
           required: true
         }
       ]
