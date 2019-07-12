@@ -19,10 +19,8 @@ const BalanaceTotal = ({ balanceTotal }) => {
   } = balanceTotal;
   return (
     <div className="BalanceTotal">
-      <div className="text-center" color="success">
-        GB: {gb} %
-      </div>
-      <Progress value={gb} />
+      <div className="text-center">GB: {gb} %</div>
+      <Progress value={gb} color="black" />
       <div className="text-center">S.N.G.L: {sngl} %</div>
       <Progress value={sngl} />
       <div className="text-center">S.N.G (no lacteo): {sngnl} %</div>

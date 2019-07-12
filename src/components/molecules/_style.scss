@@ -1,0 +1,110 @@
+@import '../../general_styling.scss';
+
+.HeaderContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  background-color: $secondary-color;
+  position: fixed;
+  z-index: 50;
+
+  .logo {
+    height: 40px;
+    margin-right: 20px;
+  }
+
+  h6 {
+    color: white;
+  }
+
+  .RightSide {
+    display: flex;
+    justify-content: space-between;
+    width: 34%;
+    align-items: center;
+    a{
+      opacity: 0.4;
+      transition-duration: 1s;
+      transition-timing-function: ease;
+    }
+    a:hover{
+      opacity: 1;
+      transition-duration: 1s;
+      transition-timing-function: ease;
+    }
+    .separator{
+      height: 2.3em;
+      opacity: 0.4;
+    }
+    .NotificationBadge {
+      .ant-badge-count {
+        background: #f2316a;
+        box-shadow: 0 0 0 1px transparent;
+        font-weight: bold;
+        top: -8px;
+        height: 15px;
+        min-width: 15px;
+        
+        line-height: 14px;
+        padding: 0;
+        font-size: 11px;
+      }
+    }
+    .NotificationButton {
+      padding: 0;
+    }
+    .NotificationIcon {
+      height: 18px;
+    }
+  }
+  .LanguageInput {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 0.5em;
+    }
+    .ant-select-selection:active,
+    .ant-select-selection:hover {
+      box-shadow: none;
+    }
+    .ant-select-selection {
+      background: transparent;
+      color: white;
+      font-weight: 500;
+      border: none;
+    }
+    .ant-select-arrow {
+      color: white;
+      top: 35%;
+      right: 5px;
+      background: $black-opacity;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50px;
+      .anticon {
+        font-size: 10px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.ant-select-dropdown-menu-item {
+  img {
+    margin-right: 0.5em;
+  }
+}
+.ant-dropdown-menu {
+  .ViewAll {
+    text-align: center;
+  }
+  .ant-spin-container {
+    padding: 1em 1.25em;
+  }
+}

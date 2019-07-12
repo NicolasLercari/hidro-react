@@ -14,8 +14,8 @@ const useStyles = makeStyles(theme => ({
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
+    fontWeight: theme.typography.fontWeightRegular
+  }
 }));
 
 export default function SimpleExpansionPanel({ balanceTotal }) {
@@ -23,7 +23,7 @@ export default function SimpleExpansionPanel({ balanceTotal }) {
 
   return (
     <div className={classes.root}>
-      <ExpansionPanel defaultExpanded={true}>
+      <ExpansionPanel defaultExpanded>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -32,7 +32,7 @@ export default function SimpleExpansionPanel({ balanceTotal }) {
           <Typography className={classes.heading}>Balance General</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-            <BalanceTotal {...{balanceTotal}}/>
+          <BalanceTotal {...{ balanceTotal }} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>

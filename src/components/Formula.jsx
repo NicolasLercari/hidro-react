@@ -61,11 +61,13 @@ class Formula extends Component {
   };
 
   onUpdate = (newIngrediente, oldIngrediente, callback) => {
-    const { ingredientesAgregados } = this.state;
-    const index = ingredientesAgregados.indexOf(oldIngrediente);
-    ingredientesAgregados[index] = newIngrediente;
-    this.setState({ ingredientesAgregados }, callback);
-    this.actualizarBalanceTotal(ingredientesAgregados);
+    this.setState(state => {
+      const { ingredientesAgregados } = state;
+      const index = ingredientesAgregados.indexOf(oldIngrediente);
+      ingredientesAgregados[index] = newIngrediente;
+      this.actualizarBalanceTotal(ingredientesAgregados);
+      return { ingredientesAgregados };
+    }, callback);
   };
 
   onAdd = (newIngrediente, callback) => {
@@ -76,11 +78,7 @@ class Formula extends Component {
       )
     ) {
       callback();
-      window.alert(
-        `El ingrediente ${
-          newIngrediente.INGREDIENTES
-        } ya esta agregado. Si desea cambiarlo, edítelo.`
-      );
+
       return;
     }
     if (!newIngrediente.cantidad) {

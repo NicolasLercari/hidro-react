@@ -1,15 +1,20 @@
+@import '../general_styling.scss';
+
 .FormulaContainer {
     display: flex;
-    justify-content: center;
-    padding: 3%;
+    justify-content: space-between;
+    // padding: 3%;
 
     .FormulaTable {
-        width: 60%;
-        margin: 0 2%;
+        width: 58%;
+        // margin: 0 2%;
+        .MTableHeader-header-149{
+            z-index: 0;
+        }
 
     }
     .Balance {
-        width: 30%;
+        width: 40%;
         .MuiTypography-body1 {
             width: 100%
         }
@@ -37,3 +42,4 @@
 .AddIngrediente {
     display: flex;
 }
+

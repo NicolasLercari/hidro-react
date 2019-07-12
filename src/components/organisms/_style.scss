@@ -1,0 +1,43 @@
+@import "../../../src/general_styling.scss";
+
+.SideMenu {
+  background-color: $white;
+  box-shadow: $shadow;
+  margin-top: 55px;
+  position: fixed;
+  z-index: 10;
+
+  span {
+    background-color: $medium-grey !important;
+  }
+  
+  .MenuButton {
+    margin-bottom: 1em;
+    border-right: 4px solid $white;
+    .MenuLabel {
+      @include primary-text-whitout-color(0.9em, 400);
+      text-transform: uppercase;
+      margin-left: 0.8em;
+    }
+  }
+
+  .MenuButton:hover,
+  .Selected {
+    border-right: 4px solid $primary-color;
+    transition: 0.5s;
+    .MenuLabel {
+      color: $primary-color !important;
+      // opacity: 0.7;
+
+    }
+    .pepe {
+      color: $primary-color !important;
+    }
+  }
+/* 
+  .MenuButton:last-child {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  } */
+}

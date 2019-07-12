@@ -2,8 +2,8 @@
 $background: #f1f3f8;
 $surface: #fff;
 
-$primary-color: #09c199;
-$secondary-color: #05364f;
+$primary-color: #f26c68;
+$secondary-color: #f26c68;
 
 $bpro: #ef8a13;
 $bprox2: #ed1c24;
@@ -33,6 +33,14 @@ $shadow: 0 1px 6px rgba(147, 141, 158, 0.16), 0 2px 6px rgba(52, 53, 62, 0.16);
   @if $font-color {
     color: $font-color;
   }
+}
+
+//TODO: REFACTOR
+@mixin primary-text-whitout-color($font-size, $font-weight) {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: $font-size;
+  font-weight: $font-weight;
 }
 
 // Container
