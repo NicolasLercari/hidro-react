@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/hidro-react/precache-manifest.01a4fb3cb7dc75847e302752e1792357.js"
+  "/hidro-react/precache-manifest.bf01ed2d6a925b632afce95e92bcab07.js"
 );
 
 self.addEventListener('message', (event) => {
